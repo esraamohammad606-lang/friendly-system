@@ -2,14 +2,44 @@
 
 include "db.php";
 
-$id = $_GET['id'];
+$query = "SELECT * FROM news
+          WHERE status='deleted'";
 
-$query = "UPDATE news
-          SET status='deleted'
-          WHERE id='$id'";
-
-mysqli_query($conn,$query);
-
-header("Location: all-news.php");
+$result = mysqli_query($conn,$query);
 
 ?>
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Deleted News</title>
+</head>
+<body>
+
+<h2>Deleted News</h2>
+
+<table border="1">
+
+<tr>
+
+    <th>Title</th>
+    <th>Details</th>
+
+</tr>
+
+<?php while($row = mysqli_fetch_assoc($result)){ ?>
+
+<tr>
+
+    <td><?php echo $row['title']; ?></td>
+
+    <td><?php echo $row['details']; ?></td>
+
+</tr>
+
+<?php } ?>
+
+</table>
+
+</body>
+</html>
